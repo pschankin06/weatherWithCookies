@@ -23,7 +23,3 @@ function User(name) {
     alert('My name is: ' + this.name);
   };
 }
-
-let john = new User('John');
-
-john.sayHi();
