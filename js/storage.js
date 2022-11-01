@@ -15,11 +15,3 @@ export function getFavoriteCities() {
   const citiesList = JSON.parse(localStorage.getItem('favoriteCities'));
   return citiesList;
 }
-
-function User(name) {
-  this.name = name;
-
-  this.sayHi = function () {
-    alert('My name is: ' + this.name);
-  };
-}
