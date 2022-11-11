@@ -7,8 +7,8 @@ import {
 } from "./view.js";
 
 import {
-  storeCurrentCity,
-  getCurrentCity,
+  // storeCurrentCity,
+  // getCurrentCity,
   storeFavoriteCities,
   getFavoriteCities,
 } from "./storage.js";
@@ -27,8 +27,9 @@ export const SERVER = {
 export const favoriteCities = new Set();
 
 window.addEventListener('load', event => {
-  const currentCity = getCurrentCity();
-  if (getCurrentCity()) {
+  // const currentCity = getCurrentCity();
+  const currentCity = getCookie(document.cookie);
+  if (currentCity) {
     getCityData(currentCity);
     getCityCoordinates(currentCity);
   }
@@ -62,7 +63,8 @@ async function getCityData(cityName) {
     const cityData = await serverResponse.json();
     console.log(cityData);
     showCityData(cityData);
-    storeCurrentCity(cityData.name);
+    // storeCurrentCity(cityData.name);
+    document.cookie = `currentCity=${cityData.name};max-age=3600`;
   } catch (error) {
     alert('Incorrect city name or server error');
     alert(error);
@@ -122,4 +124,10 @@ export function convertDate(date) {
   }
   const finalDate = `${day} ${time.toLocaleDateString('en-US', options)}`;
   return finalDate;
+}
+
+function getCookie(cookieString) {
+  const searchFrom = cookieString.indexOf('=') + 1;
+  const cityName = cookieString.slice(searchFrom);
+  return cityName;
 }
